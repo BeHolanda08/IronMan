@@ -14,11 +14,13 @@ const soundLaser = new Audio();
 soundLaser.src = './images/cartoon_tiro.mp3';
 const soundBomb = new Audio();
 soundBomb.src = './images/explosao_201203171622.mp3';
-
+const thanos = new Image();
+thanos.src = './images/thanos.png';
 
 const myOpponent = [];
 const shots = [];
 let score = 0;
+let opponentThanos = true;
 
 
 const canvas = document.getElementById('canvas');
@@ -46,9 +48,11 @@ const backgroundImage = {
 
   score() {
     ctx.font = '40px verdana';
-    ctx.color = 'red';
+    ctx.fillStyle = 'Black';
     ctx.fillText(`Score:${+score}`, 800, 40);
   },
+
+
 };
 
 class Component {
@@ -90,10 +94,10 @@ class Component {
 
   crashWith(opponent) {
     return !(
-      this.bottom() < opponent.top()
-      || this.top() > opponent.bottom()
+      this.bottom() < opponent.top() + 50
+      || this.top() > opponent.bottom() + 50
       || this.right() < opponent.left() + 50
-      || this.left() > opponent.right()
+      || this.left() > opponent.right() + 50
     );
   }
 
@@ -156,18 +160,22 @@ function checkDeath() {
   myOpponent.forEach((opponent, index) => {
     if (opponent.deathOpponent(shots)) {
       shots.splice(index, 1);
-      score += 10;
+      if (opponent.image.src === img3.src) {
+        score += 10;
+      }
       opponent.image = imgBomb1;
       soundBomb.play();
       opponent.speed = 0;
       setTimeout(() => {
         myOpponent.splice(index, 1);
-      }, 100);
+      }, 530);
     }
-    if (score === 100
-      && score === 200
-      && score === 300) {
+    if (score > 50) {
       backgroundImage.frames += 12;
+    } if (score > 80) {
+      backgroundImage.frames += 15;
+    } if (score > 100) {
+      backgroundImage.frames += 18;
     }
   });
 }
@@ -184,6 +192,9 @@ function updateOpponents() {
       position = 330;
     }
     myOpponent.push(new Component(250, 100, 1000, position, img3));
+  } if (score >= 100 && opponentThanos) {
+    myOpponent.push(new Component(220, 250, 1000, 245, thanos));
+    opponentThanos = false;
   }
 }
 
@@ -223,7 +234,7 @@ document.onkeydown = (e) => {
       player.speedX = 5;
       break;
     case 32:
-      soundLaser.play(e);
+      soundLaser.play();
       shots.push(new Shot(player.x + 90, player.y + 73, img4));
       break;
   }
