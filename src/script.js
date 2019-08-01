@@ -1,11 +1,11 @@
 const img = new Image();
-img.src = './images/ironManFundo.jpg';
+img.src = '../images/ironManFundo.jpg';
 const img2 = new Image();
-img2.src = './images/IronMan.png~';
+img2.src = '../images/IronMan.png~';
 const img3 = new Image();
-img3.src = './images/Nave 2.png';
+img3.src = '../images/Nave 2.png';
 const img4 = new Image();
-img4.src = './images/laser.png';
+img4.src = '../images/laser.png';
 
 
 const myOpponent = [];
