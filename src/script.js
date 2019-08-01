@@ -9,9 +9,11 @@ img4.src = './images/laser.png';
 const imgBomb1 = new Image();
 imgBomb1.src = './images/bomb1.png';
 const soundGame = new Audio();
-soundGame.src = './images/The-Avengers-Theme-Song.mp3';
+soundGame.src = './images/The-Avengers-Theme-Song.ogg';
 const soundLaser = new Audio();
-soundLaser.src = '../images/cartoon_tiro.mp3';
+soundLaser.src = './images/cartoon_tiro.mp3';
+const soundBomb = new Audio();
+soundBomb.src = './images/explosao_201203171622.mp3';
 
 
 const myOpponent = [];
@@ -44,7 +46,7 @@ const backgroundImage = {
 
   score() {
     ctx.font = '40px verdana';
-    ctx.fillStyle = 'red';
+    ctx.color = 'red';
     ctx.fillText(`Score:${+score}`, 800, 40);
   },
 };
@@ -156,10 +158,16 @@ function checkDeath() {
       shots.splice(index, 1);
       score += 10;
       opponent.image = imgBomb1;
+      soundBomb.play();
       opponent.speed = 0;
       setTimeout(() => {
         myOpponent.splice(index, 1);
-      }, 500);
+      }, 100);
+    }
+    if (score === 100
+      && score === 200
+      && score === 300) {
+      backgroundImage.frames += 12;
     }
   });
 }
@@ -170,7 +178,7 @@ function updateOpponents() {
     myOpponent[i].update();
   }
   backgroundImage.frames += 9;
-  if (backgroundImage.frames % 100 === 0) {
+  if (backgroundImage.frames % 200 === 0) {
     let position = Math.floor(Math.random() * canvas.height);
     if (position > 330) {
       position = 330;
@@ -188,9 +196,9 @@ function updateCanvas() {
   player.update();
   shotStart(player);
   updateOpponents();
+  checkDeath();
   backgroundImage.score();
   checkGameOver();
-  checkDeath();
   requestId = window.requestAnimationFrame(updateCanvas);
 }
 
@@ -215,6 +223,7 @@ document.onkeydown = (e) => {
       player.speedX = 5;
       break;
     case 32:
+      soundLaser.play(e);
       shots.push(new Shot(player.x + 90, player.y + 73, img4));
       break;
   }
