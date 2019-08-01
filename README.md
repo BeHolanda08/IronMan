@@ -1,6 +1,6 @@
 #Iron Man Game
 
-Link game here [GitHub Pages](https://beholanda08.github.io/IronMan/).
+Link game here (https://beholanda08.github.io/IronMan/).
 
 #Rules
 
