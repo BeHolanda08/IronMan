@@ -1,13 +1,17 @@
-###Iron Man Game
+#Iron Man Game
 
-###Rules
+Link game here [GitHub Pages](https://beholanda08.github.io/IronMan/).
+
+#Rules
+
 - Arrows to move IronMan
 - Space to shoot the laser
 
 - Good luck!
 
 
-###Acknowledgments
+#Acknowledgments
+
 I would like to thank everyone who somehow helped me with the game, Professor, T.A.'s and classmates!
 
 It was very busy, but extremely rewarding to work on this project!
