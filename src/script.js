@@ -8,6 +8,10 @@ const img4 = new Image();
 img4.src = './images/laser.png';
 const imgBomb1 = new Image();
 imgBomb1.src = './images/bomb1.png';
+const soundGame = new Audio();
+soundGame.src = './images/The-Avengers-Theme-Song.mp3';
+const soundLaser = new Audio();
+soundLaser.src = '../images/cartoon_tiro.mp3';
 
 
 const myOpponent = [];
@@ -176,6 +180,7 @@ function updateOpponents() {
 }
 
 function updateCanvas() {
+  soundGame.play();
   backgroundImage.move();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   backgroundImage.draw();
