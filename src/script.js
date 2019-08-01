@@ -1,11 +1,13 @@
 const img = new Image();
-img.src = './images/ironManFundo.jpg';
+img.src = './images/Background.jpg';
 const img2 = new Image();
 img2.src = './images/IronMan.png';
 const img3 = new Image();
 img3.src = './images/Nave 2.png';
 const img4 = new Image();
 img4.src = './images/laser.png';
+const imgBomb1 = new Image();
+imgBomb1.src = './images/bomb1.png';
 
 
 const myOpponent = [];
@@ -37,9 +39,9 @@ const backgroundImage = {
   },
 
   score() {
-    ctx.font = '18px verdana';
+    ctx.font = '40px verdana';
     ctx.fillStyle = 'red';
-    ctx.fillText('Score:' + score, 800, 18);
+    ctx.fillText(`Score:${+score}`, 800, 40);
   },
 };
 
@@ -84,7 +86,7 @@ class Component {
     return !(
       this.bottom() < opponent.top()
       || this.top() > opponent.bottom()
-      || this.right() < opponent.left()
+      || this.right() < opponent.left() + 50
       || this.left() > opponent.right()
     );
   }
@@ -92,7 +94,9 @@ class Component {
   deathOpponent(shotArray) {
     let hit = false;
     shotArray.forEach((element) => {
-      if (element.x + 50 >= this.x && element.y >= this.y && element.y <= this.y + this.height) {
+      if (element.x + 10 >= this.x
+        && element.y >= this.y
+        && element.y <= this.y + this.height) {
         hit = true;
       }
     });
@@ -100,7 +104,7 @@ class Component {
   }
 }
 
-const player = new Component(130, 200, 0, 0, img2);
+const player = new Component(140, 200, 0, 80, img2);
 
 class Shot {
   constructor(x, y, image) {
@@ -111,7 +115,7 @@ class Shot {
   }
 
   update() {
-    ctx.drawImage(this.image, this.x, this.y, 50, 20);
+    ctx.drawImage(this.image, this.x, this.y, 50, 50);
   }
 
   newPos() {
@@ -147,7 +151,7 @@ function checkDeath() {
     if (opponent.deathOpponent(shots)) {
       shots.splice(index, 1);
       score += 10;
-      opponent.image = img2;
+      opponent.image = imgBomb1;
       opponent.speed = 0;
       setTimeout(() => {
         myOpponent.splice(index, 1);
@@ -161,8 +165,8 @@ function updateOpponents() {
     myOpponent[i].x += myOpponent[i].speed;
     myOpponent[i].update();
   }
-  backgroundImage.frames += 4;
-  if (backgroundImage.frames % 350 === 0) {
+  backgroundImage.frames += 9;
+  if (backgroundImage.frames % 100 === 0) {
     let position = Math.floor(Math.random() * canvas.height);
     if (position > 330) {
       position = 330;
@@ -194,19 +198,19 @@ document.getElementById('start-button').onclick = () => {
 document.onkeydown = (e) => {
   switch (e.keyCode) {
     case 38:
-      player.speedY = -10;
+      player.speedY = -5;
       break;
     case 40:
-      player.speedY = 10;
+      player.speedY = 5;
       break;
     case 37:
-      player.speedX = -10;
+      player.speedX = -5;
       break;
     case 39:
-      player.speedX = 10;
+      player.speedX = 5;
       break;
     case 32:
-      shots.push(new Shot(player.x + 130, player.y + 87, img4));
+      shots.push(new Shot(player.x + 90, player.y + 73, img4));
       break;
   }
 };

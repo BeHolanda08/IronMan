@@ -5,7 +5,10 @@ body button {
   padding: 20px 40px;
   border: 0;
   border-radius: 5px;
-  margin-bottom: center;
+  position: absolute;
+  left: 5%;
+  top: 70%;
+  
 }
 
 #game-board {
