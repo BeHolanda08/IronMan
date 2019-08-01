@@ -1,7 +1,7 @@
 const img = new Image();
 img.src = '../images/ironManFundo.jpg';
 const img2 = new Image();
-img2.src = '../images/IronMan.png~';
+img2.src = '../images/IronMan.png';
 const img3 = new Image();
 img3.src = '../images/Nave 2.png';
 const img4 = new Image();
