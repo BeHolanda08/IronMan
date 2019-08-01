@@ -10,6 +10,7 @@ img4.src = './images/laser.png';
 
 const myOpponent = [];
 const shots = [];
+let score = 0;
 
 
 const canvas = document.getElementById('canvas');
@@ -36,10 +37,9 @@ const backgroundImage = {
   },
 
   score() {
-    const points = Math.floor(backgroundImage.frames / 5);
-    this.ctx.font = '18px verdana';
-    this.cxt.fillStyle = 'red';
-    this.cxt.fillText('Score:' + points, 800, 0);
+    ctx.font = '18px verdana';
+    ctx.fillStyle = 'red';
+    ctx.fillText('Score:' + score, 800, 18);
   },
 };
 
@@ -52,6 +52,7 @@ class Component {
     this.image = image;
     this.speedX = 0;
     this.speedY = 0;
+    this.speed = -5;
   }
 
   update() {
@@ -144,15 +145,20 @@ function checkGameOver() {
 function checkDeath() {
   myOpponent.forEach((opponent, index) => {
     if (opponent.deathOpponent(shots)) {
-      myOpponent.splice(index, 1);
       shots.splice(index, 1);
+      score += 10;
+      opponent.image = img2;
+      opponent.speed = 0;
+      setTimeout(() => {
+        myOpponent.splice(index, 1);
+      }, 500);
     }
   });
 }
 
 function updateOpponents() {
   for (let i = 0; i < myOpponent.length; i += 1) {
-    myOpponent[i].x += -5;
+    myOpponent[i].x += myOpponent[i].speed;
     myOpponent[i].update();
   }
   backgroundImage.frames += 4;
@@ -173,6 +179,7 @@ function updateCanvas() {
   player.update();
   shotStart(player);
   updateOpponents();
+  backgroundImage.score();
   checkGameOver();
   checkDeath();
   requestId = window.requestAnimationFrame(updateCanvas);
@@ -187,16 +194,16 @@ document.getElementById('start-button').onclick = () => {
 document.onkeydown = (e) => {
   switch (e.keyCode) {
     case 38:
-      player.speedY -= 1;
+      player.speedY = -10;
       break;
     case 40:
-      player.speedY += 1;
+      player.speedY = 10;
       break;
     case 37:
-      player.speedX -= 1;
+      player.speedX = -10;
       break;
     case 39:
-      player.speedX += 1;
+      player.speedX = 10;
       break;
     case 32:
       shots.push(new Shot(player.x + 130, player.y + 87, img4));
